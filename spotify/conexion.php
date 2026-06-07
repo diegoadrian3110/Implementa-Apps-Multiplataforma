@@ -1,74 +1,62 @@
 <?php
-// Datos de configuración del servidor local (XAMPP / WAMP)
-$host = "localhost";
-$db   = "spotify";
-$user = "root";
-$pass = ""; // En XAMPP por defecto está vacío
-$charset = "utf8mb4";
-
-// Configuración de opciones de PDO
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, // Activa el reporte de errores
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,       // Devuelve los datos en arrays asociativos
-    PDO::ATTR_EMULATE_PREPARES   => false,                  // Desactiva la emulación para mayor seguridad
-];
+$host    = 'localhost'; 
+$db      = 'spotify';
+$user    = 'root';
+$pass    = '';
+$charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+$options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, 
+    PDO::ATTR_EMULATE_PREPARES   => false,                 
+];
 
 try {
-    // Se crea la instancia de la conexión
+
     $pdo = new PDO($dsn, $user, $pass, $options);
-    // echo "Conexión exitosa"; // Descomenta esto solo para probar que funcione
+    header("Location: index.html");
+    
 } catch (\PDOException $e) {
-    // Si hay un error, detiene la app y lo muestra
-    die("Error al conectar a la base de datos: " . $e->getMessage());
+
+    die("Hubo un error al conectar: ");
 }
 
-require_once 'conexion.php';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+    $username  = trim($_POST['username']);
+    $email  = trim($_POST['email']);
+    $password = trim($_POST['password']);
 
-// 2. Verificar que los datos llegaron por el método POST
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recorrer y limpiar campos básicos
-    $usuario  = $_POST['username'] ?? '';
-    $correo   = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
-
-    // Validar que ningún campo viaje vacío
-    if (empty($usuario) || empty($correo) || empty($password)) {
-        die("Todos los campos son obligatorios.");
+    if (empty($username) || empty($email) || empty($password)) {
+        die("Por favor, llena todos los campos.");
     }
 
     try {
-        /* 3. Preparar la consulta SQL de inserción.
-           Usamos marcadores (:user, :email, :pass) para evitar inyección SQL.
-        */
-        $sql = "INSERT INTO usuarios (usuario, correo, contrasena) VALUES (:user, :email, :pass)";
+        $sql = "INSERT INTO usuarios (username, email, password) VALUES (:username, :email, :password)";
         $stmt = $pdo->prepare($sql);
-        
-        /* 4. Ejecutar la consulta pasando los valores reales.
-           Nota escolar: En un entorno real, la contraseña NUNCA se guarda en texto plano; 
-           se encripta usando password_hash($password, PASSWORD_BCRYPT).
-        */
+
         $resultado = $stmt->execute([
-            'user'  => $usuario,
-            'email' => $correo,
-            'pass'  => $password 
+            ':username'  => $username,
+            ':email' => $email,
+            ':password' => $password
         ]);
 
-        // 5. Si la inserción fue exitosa, redirigir al Login
         if ($resultado) {
-            // Reemplaza 'login.html' por el nombre real de tu archivo de login
-            header("Location: index.hmtl?registro=exitoso");
-            exit();
+            echo "¡Usuario registrado exitosamente de manera segura!";
         }
 
     } catch (\PDOException $e) {
-        // Manejo de errores (por ejemplo, si el usuario o correo ya existen y son campos UNIQUE)
+
         if ($e->getCode() == 23000) {
-            echo "El nombre de usuario o el correo ya están registrados.";
+            echo "El nombre de usuario ya está en uso.";
         } else {
             echo "Error al registrar el usuario: " . $e->getMessage();
         }
     }
+} else {
+
+    header('Location: registro.php');
+    exit;
 }
 ?>

@@ -1,0 +1,71 @@
+        body {
+            background: #09b94d;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+        }
+        .login-container {
+            background: #ffffff;
+            padding: 2.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(44, 62, 80, 0.2);
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+        }
+        .login-container h2 {
+            margin-bottom: 1.5rem;
+            color: #1d251f;
+            font-weight: 700;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            color: #333;
+            font-size: 1rem;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus {
+            border-color: #09b94d;
+            outline: none;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(90deg, #09b94d, #1d251f);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .login-btn:hover {
+            background: linear-gradient(90deg, #078336, #1d251f);
+        }
+        .login-container .extra {
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            color: #6b7280;
+        }
+        
+        @media (max-width: 400px) {
+            .login-container {
+                padding: 1.5rem 0.5rem;
+            }
+        }

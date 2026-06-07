@@ -1,0 +1,98 @@
+:root {
+    --sidebar-width: 260px;
+    --bg-dark: #1e1e2f;
+    --bg-light: #f4f4f9;
+    --text-color: #ffffff;
+    --active-color: #4f46e5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    background-color: var(--bg-light);
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    background-color: var(--bg-dark);
+    color: var(--text-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease;
+    z-index: 1000;
+}
+
+.sidebar-header {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #3a3a55;
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0;
+}
+
+.sidebar-menu a {
+    color: #b3b3cb;
+    text-decoration: none;
+    padding: 15px 25px;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.sidebar-menu a:hover, .sidebar-menu a.active {
+    color: var(--text-color);
+    background-color: var(--active-color);
+    border-left: 4px solid #fff;
+}
+
+.main-content {
+    margin-left: var(--sidebar-width);
+    padding: 40px;
+    width: 100%;
+    transition: margin-left 0.3s ease;
+}
+
+.toggle-btn {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    font-size: 24px;
+    background: var(--bg-dark);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+.contenedor-item {
+    display: flex;
+    align-items: left;
+    gap: 10px;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+.imagen-lado {
+    width: 60px;
+    height: auto;
+    border-radius: 50px;
+}
+
+.contenido-texto {
+    flex: 1; 
+}
